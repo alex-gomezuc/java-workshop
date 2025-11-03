@@ -1,0 +1,15 @@
+package com.smadex.platform_thread;
+
+public class WaitingOperation {
+
+  public static void perform(String name, int delay) {
+    System.out.println(
+        "Thread: " + Thread.currentThread() + " Waiting for " + name + " for " + delay
+        + " seconds");
+    try {
+      Thread.sleep(delay * 1_000L);
+    } catch (InterruptedException e) {
+      throw new RuntimeException(e);
+    }
+  }
+}
