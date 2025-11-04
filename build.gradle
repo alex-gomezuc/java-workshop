@@ -27,3 +27,7 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+tasks.withType(JavaCompile).configureEach {
+    options.compilerArgs.addAll(['--enable-preview', '--add-exports',
+                                 'java.base/jdk.internal.vm=ALL-UNNAMED'])
+}
