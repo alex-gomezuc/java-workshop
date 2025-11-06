@@ -1,1 +1,4 @@
-rootProject.name = 'java-workshop'
+rootProject.name = 'java-workshop-parent'
+
+include 'bidder-app'
+include 'webservices'
