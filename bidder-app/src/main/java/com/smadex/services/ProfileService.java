@@ -1,7 +1,6 @@
 package com.smadex.services;
 
 import com.smadex.domain.Model.ProfileInfo;
-import com.smadex.domain.RequestContext;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.concurrent.StructuredTaskScope;
@@ -23,8 +22,7 @@ public class ProfileService {
     this.restClient = restClient;
   }
 
-  public ProfileInfo getFirstProfileAvailable() {
-    var ip = RequestContext.getCurrentRequestIp();
+  public ProfileInfo getFirstProfileAvailable(String ip) {
     try (var taskScope = StructuredTaskScope.open(
         Joiner.<ProfileInfo>anySuccessfulResultOrThrow())) {
       var startTime = Instant.now();

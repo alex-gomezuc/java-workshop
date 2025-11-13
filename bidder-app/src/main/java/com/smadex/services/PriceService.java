@@ -28,9 +28,11 @@ public class PriceService {
 
   public double getPrice(BidRequest bidRequest) {
     try (var structuredTaskScope = StructuredTaskScope.open()) {
-      var countryFuture = structuredTaskScope.fork(countryService::getCountryInfo);
-      var carrierFuture = structuredTaskScope.fork(carrierService::getCarrierInfo);
-      var profileFuture = structuredTaskScope.fork(profileService::getFirstProfileAvailable);
+      var ip = bidRequest.ip();
+      var countryFuture = structuredTaskScope.fork(() -> countryService.getCountryInfo(ip));
+      var carrierFuture = structuredTaskScope.fork(() -> carrierService.getCarrierInfo(ip));
+      var profileFuture = structuredTaskScope.fork(
+          () -> profileService.getFirstProfileAvailable(ip));
 
       structuredTaskScope.join();
 

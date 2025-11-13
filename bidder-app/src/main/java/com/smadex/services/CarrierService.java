@@ -1,7 +1,6 @@
 package com.smadex.services;
 
 import com.smadex.domain.Model.CarrierInfo;
-import com.smadex.domain.RequestContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -18,8 +17,7 @@ public class CarrierService {
     this.restClient = restClient;
   }
 
-  public CarrierInfo getCarrierInfo() {
-    var ip = RequestContext.getCurrentRequestIp();
+  public CarrierInfo getCarrierInfo(String ip) {
 
     logger.info("{} CarrierService.getCarrierInfo: Start", ip);
 

@@ -1,7 +1,6 @@
 package com.smadex.services;
 
 import com.smadex.domain.Model.CountryInfo;
-import com.smadex.domain.RequestContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -18,8 +17,7 @@ public class CountryService {
     this.restClient = restClient;
   }
 
-  public CountryInfo getCountryInfo() {
-    var ip = RequestContext.getCurrentRequestIp();
+  public CountryInfo getCountryInfo(String ip) {
 
     logger.info("{} CountryService.getCountryInfo: Start", ip);
 
