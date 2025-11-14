@@ -27,33 +27,6 @@ public class PriceService {
   }
 
   public double getPrice(BidRequest bidRequest) {
-    try (var structuredTaskScope = StructuredTaskScope.open()) {
-      var ip = bidRequest.ip();
-      var countryFuture = structuredTaskScope.fork(() -> countryService.getCountryInfo(ip));
-      var carrierFuture = structuredTaskScope.fork(() -> carrierService.getCarrierInfo(ip));
-      var profileFuture = structuredTaskScope.fork(
-          () -> profileService.getFirstProfileAvailable(ip));
-
-      structuredTaskScope.join();
-
-      var country = countryFuture.get();
-      var carrier = carrierFuture.get();
-      var profile = profileFuture.get();
-
-      return computePrice(country, carrier, profile);
-
-    } catch (InterruptedException e) {
-      Thread.currentThread().interrupt();
-      throw new RuntimeException("Price computation was interrupted", e);
-
-    } catch (FailedException failedException) {
-      logger.error("One or more tasks failed", failedException);
-      throw new RuntimeException("Failed to retrieve necessary information for price computation",
-          failedException);
-
-    } catch (Exception e) {
-      throw new RuntimeException("Failed to compute price", e);
-    }
   }
 
   private double computePrice(CountryInfo country, CarrierInfo carrier, ProfileInfo profile) {
